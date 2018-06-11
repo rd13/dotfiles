@@ -9,6 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'kien/ctrlp.vim'
 Plug 'altercation/vim-colors-solarized'
+Plug 'joshdick/onedark.vim'
 Plug 'tomasr/molokai'
 Plug 'whatyouhide/vim-gotham'
 Plug 'mhartington/oceanic-next'
@@ -29,6 +30,10 @@ Plug 'maksimr/vim-jsbeautify'
 Plug 'junegunn/vim-easy-align'
 Plug 'rking/ag.vim' 
 Plug '2072/PHP-Indenting-for-VIm'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'editorconfig/editorconfig-vim'
+" Plug 'w0rp/ale'
 
 " Initialize plugin system
 call plug#end()
@@ -69,7 +74,7 @@ set shiftwidth=2      " Indents will have a width of 2
 
 set softtabstop=2     " Sets the number of columns for a TAB
 
-set expandtab         " Expand TABs to spaces
+" set expandtab         " Expand TABs to spaces
 
 set clipboard=unnamed " Copy to clipboard
 
@@ -117,3 +122,5 @@ tnoremap <esc> <C-\><C-n>
 
 :command Q q
 :command W w
+
+au BufNewFile,BufRead *.es6 set filetype=javascript
