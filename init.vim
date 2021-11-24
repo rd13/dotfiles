@@ -15,6 +15,7 @@ Plug 'vim-scripts/tComment'
 Plug 'tpope/vim-rails'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-ruby/vim-ruby'
 Plug 'mattn/emmet-vim'
 Plug 'will133/vim-dirdiff'
@@ -27,15 +28,10 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " Themes
-Plug 'jacoborus/tender.vim'
-" Plug 'skielbasa/vim-material-monokai'
-" Plug 'tomasr/molokai'
-" Plug 'mhartington/oceanic-next'
-" Plug 'joshdick/onedark.vim'
-" Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'altercation/vim-colors-solarized'
+Plug 'Rigellute/shades-of-purple.vim'
 
 " Shows a git diff in the gutter (sign column) and stages/undoes hunks
 Plug 'airblade/vim-gitgutter'
@@ -50,23 +46,15 @@ augroup VimCSS3Syntax
 	autocmd FileType css setlocal iskeyword+=-
 augroup END
 
-" Lean & mean status/tabline for vim that's light as air
-Plug 'vim-airline/vim-airline'
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline_inactive_collapse=0
-let g:airline_powerline_fonts = 1
-" let g:airline_section_a = ''
-" let g:airline_section_b = ''
-" let g:airline_section_c = '%t'
-" let g:airline_section_x = ''
-" let g:airline_section_y = ''
-" let g:airline_section_z = ''
-let g:airline_theme='tender'
-set t_Co=256
+" Lightline
+Plug 'itchyny/lightline.vim'
+let g:shades_of_purple_lightline = 1
+let g:lightline = {
+			\ 'colorscheme': 'shades_of_purple',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+      \ }
+      \ }
 
 " Asynchronous Lint Engine
 Plug 'w0rp/ale'
@@ -74,7 +62,7 @@ let g:ale_linters = {
 			\   'javascript': ['eslint'],
 			\   'javascript.jsx': ['eslint'],
 			\}
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['eslint']
 
@@ -84,16 +72,13 @@ Plug 'machakann/vim-highlightedyank'
 " Initialize plugin system
 call plug#end()
 
+" enable 24bit true color
+set termguicolors
+
 " Theme
 syntax enable
 
-" Solarized
-if !has("gui_running")
-	let g:solarized_termtrans=1
-	" let g:solarized_termcolors=256
-endif
-
-colorscheme tender 
+colorscheme shades_of_purple
 
 set background=dark
 
@@ -108,7 +93,7 @@ set shiftwidth=2      " Indents will have a width of 2
 
 set softtabstop=2     " Sets the number of columns for a TAB
 
-" set expandtab         " Expand TABs to spaces
+set expandtab         " Expand TABs to spaces
 
 set clipboard=unnamed " Copy to clipboard
 
@@ -126,6 +111,9 @@ let g:ctrlp_custom_ignore = '\v[\/](bower_components|node_modules|target|dist)|(
 " Emmet - Use tab to expand HTML
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
+" set filetypes as typescriptreact
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
+
 " Easy Align plugin
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
@@ -142,19 +130,14 @@ nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
-" Window arrangement
-" nmap <C-S-J> <C-W><S-J>
-" nmap <C-S-K> <C-W><S-K>
-" nmap <C-S-H> <C-W><S-H>
-" nmap <C-S-L> <C-W><S-L>
-
 " enter normal mode from terminal
 tnoremap <esc> <C-\><C-n>
 
-" Auto save files when focus is lost
-" :au FocusLost * :wa
-
+" Incase I have fat fingers
 :command Q q
 :command W w
+:command X x
+:cmap Q! q!
+:cmap E! e!
 
 au BufNewFile,BufRead *.es6 set filetype=javascript
